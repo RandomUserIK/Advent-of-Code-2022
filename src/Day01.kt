@@ -19,7 +19,7 @@ fun main() {
 	fun part2(input: List<String>): Int = getElfCalories(input).sortedDescending().take(3).sum()
 
 
-	val input = readInput("day01_input")
+	val input = readInput("inputs/day01_input")
 	println(part1(input))
 	println(part2(input))
 }

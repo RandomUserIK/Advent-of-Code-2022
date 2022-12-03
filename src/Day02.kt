@@ -46,7 +46,7 @@ fun main() {
 		}
 	}
 
-	val input = readInput("day02_input").map { line -> Pair(line.first(), line.last()) }
+	val input = readInput("inputs/day02_input").map { line -> Pair(line.first(), line.last()) }
 	println(part1(input))
 	println(part2(input))
 }
