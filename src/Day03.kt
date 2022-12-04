@@ -7,14 +7,16 @@ fun main() {
 		input
 			.map {
 				val (first, second) = it.chunked(it.length / 2)
-				Pair(first, second)
+				Pair(first.toSet(), second.toSet())
 			}
-			.fold(0) { acc, pair -> acc + (PRIORITIES[pair.first.firstOrNull { it in pair.second }] ?: 0) }
+			.fold(0) { acc, (left, right) -> acc + (PRIORITIES[(left intersect right).first()] ?: 0) }
 
 	fun part2(input: List<String>): Int =
 		input
 			.chunked(GROUP_SIZE)
-			.map { items -> items.first().firstOrNull { badge -> badge in items[1] && badge in items.last() } }
+			.map { (first: String, second: String, third: String) ->
+				(first.toSet() intersect second.toSet() intersect third.toSet()).first()
+			}
 			.fold(0) { acc, badge -> acc + (PRIORITIES[badge] ?: 0) }
 
 	val input = readInput("inputs/day03_input")
