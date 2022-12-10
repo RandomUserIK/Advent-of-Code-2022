@@ -40,15 +40,20 @@ fun main() {
 		directives.forEach { directive ->
 			repeat(directive.numberOfCrates) { crateStacks[directive.to].push(crateStacks[directive.from].pop()) }
 		}
-		println(crateStacks.map { it.last() }.joinToString(""))
+		println(crateStacks.map { it.peek() }.joinToString(""))
 	}
 
-	fun part2() {
-
+	fun part2(crateStacks: List<Stack<Char>>, directives: List<Directive>) {
+		directives.forEach { directive ->
+			val toBeMoved = crateStacks[directive.from].takeLast(directive.numberOfCrates)
+			crateStacks[directive.to].addAll(toBeMoved)
+			repeat(directive.numberOfCrates) { crateStacks[directive.from].pop() }
+		}
+		println(crateStacks.map { it.peek() }.joinToString(""))
 	}
 
 	val input = readInput("inputs/day05_input")
 	val (crateStacks, directives) = getStacksAndDirectives(input)
 	part1(crateStacks, directives)
-	part2()
+	part2(crateStacks, directives)
 }
