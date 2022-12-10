@@ -7,9 +7,6 @@ data class Directory(
 		get() = filesSize + children.values.sumOf { it.dirSize }
 }
 
-fun findDirectories(dir: Directory): List<Directory> =
-	dir.children.values.filter { it.dirSize <= 100_000 } + dir.children.values.flatMap { findDirectories(it) }
-
 fun List<String>.toFileSystem(): Directory {
 	val callStack = ArrayDeque<Directory>().also { it.add(Directory("/")) }
 	forEach { line ->
@@ -33,13 +30,28 @@ fun List<String>.toFileSystem(): Directory {
 }
 
 fun main() {
-	fun part1(input: List<String>) {
+	fun part1(input: List<String>): Int {
+		fun findDirectories(dir: Directory): List<Directory> =
+			dir.children.values.filter { it.dirSize <= 100000 } + dir.children.values.flatMap { findDirectories(it) }
+
 		val root = input.toFileSystem()
-		println(findDirectories(root).sumOf { it.dirSize })
+		return findDirectories(root).sumOf { it.dirSize }
 	}
 
-	fun part2(input: List<String>) {
+	fun part2(input: List<String>): Int {
+		fun findDirectories(dir: Directory, diff: Int): List<Directory> =
+			dir.children.values.filter { it.dirSize >= diff } + dir.children.values.flatMap {
+				findDirectories(
+					it,
+					diff
+				)
+			}
 
+		val filesystemSize = 70000000
+		val root = input.toFileSystem()
+		val unused = filesystemSize - root.dirSize
+		val neededSpace = 30000000 - unused
+		return findDirectories(root, neededSpace).minOf { it.dirSize }
 	}
 
 	val input = readInput("inputs/day07_input")
