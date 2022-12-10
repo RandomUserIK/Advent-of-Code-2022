@@ -1,4 +1,10 @@
-fun String.hasAllUniqueChars(): Boolean = toSet().size == length
+// fun String.hasAllUniqueChars(): Boolean = toSet().size == length
+
+// slightly better
+fun String.hasAllUniqueChars(): Boolean {
+	val ephemeralSet = hashSetOf<Char>()
+	return all { ephemeralSet.add(it) }
+}
 
 fun main() {
 
