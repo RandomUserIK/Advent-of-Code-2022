@@ -61,7 +61,7 @@ fun main() {
 		val directions = input.toDirections()
 		var head = Point()
 		var tail = Point()
-		var pointsVisited = mutableSetOf(Point()) // we ought to include the starting point
+		val pointsVisited = mutableSetOf(Point()) // we ought to include the starting point
 
 		directions.forEach { direction ->
 			head = head.move(direction)
@@ -73,8 +73,21 @@ fun main() {
 		return pointsVisited.size
 	}
 
-	fun part2(input: List<String>) {
+	fun part2(input: List<String>): Int {
+		val directions = input.toDirections()
+		val pointsVisited = mutableSetOf(Point())
+		val knots = Array(10) { Point() }
 
+		directions.forEach { direction ->
+			knots[0] = knots.first().move(direction)
+			(0 until knots.lastIndex).forEach { headIdx ->
+				if (!(knots[headIdx] touches knots[headIdx + 1])) {
+					knots[headIdx + 1] = knots[headIdx + 1] chase knots[headIdx]
+				}
+			}
+			pointsVisited += knots.last()
+		}
+		return pointsVisited.size
 	}
 
 	val input = readInput("inputs/day09_input")
