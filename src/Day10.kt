@@ -25,10 +25,35 @@ fun main() {
 	}
 
 	fun part2(input: List<String>) {
+		var cycle = 1
+		var register = 1
 
+		fun overlapsSprite(position: Int, register: Int): Boolean = position % 40 in (register - 1..register + 1)
+
+		fun getCRTSymbol(position: Int, register: Int): String {
+			if (position % 40 == 0)
+				println()
+
+			return when {
+				overlapsSprite(position, register) -> "#"
+				else -> "."
+			}
+		}
+
+		input.forEach { instruction ->
+			print(getCRTSymbol(cycle - 1, register))
+			++cycle
+
+			if (instruction != "noop") {
+				print(getCRTSymbol(cycle - 1, register))
+				++cycle
+				register += instruction.split(" ").last().toInt()
+			}
+		}
 	}
 
 	val input = readInput("inputs/day10_input")
 	println(part1(input))
-	println(part2(input))
+	part2(input)
+	println()
 }
