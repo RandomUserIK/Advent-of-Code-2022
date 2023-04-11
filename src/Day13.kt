@@ -61,8 +61,18 @@ fun main() {
 			}
 			.sum()
 
-	fun part2(input: List<String>) {
+	fun part2(input: List<String>): Int {
+		val dividerNode1 = Parser.from("[[2]]")
+		val dividerNode2 = Parser.from("[[6]]")
 
+		return input
+			.filterNot { it.isBlank() }
+			.map { Parser.from(it) }
+			.plus(listOf(dividerNode1, dividerNode2))
+			.sorted()
+			.let {
+				(it.indexOf(dividerNode1) + 1) * (it.indexOf(dividerNode2) + 1)
+			}
 	}
 
 	val input = readInput("inputs/day13_input")
