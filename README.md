@@ -1,3 +1,5 @@
+[![build](https://github.com/RandomUserIK/advent-of-code-2022/actions/workflows/gradle-ci.yaml/badge.svg)](https://github.com/RandomUserIK/advent-of-code-2022/actions/workflows/gradle-ci.yaml)
+
 # advent-of-code-2022
 
 Welcome to the Advent of Code[^aoc] Kotlin project created by [randomuserik][github] using the [Advent of Code Kotlin Template][template] delivered by JetBrains.
